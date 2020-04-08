@@ -15,3 +15,6 @@
 /frontend/npm-debug.log
 /frontend/yarn-error.log
 /frontend/gui_test_screenshots
+/frontend/node_moudules/*
+/node_modules/*
+node_moudules/*

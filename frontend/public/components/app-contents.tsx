@@ -227,7 +227,7 @@ const AppContents = connect((state: RootState) => ({
 
           <LazyRoute path="/error" exact loader={() => import('./error' /* webpackChunkName: "error" */).then(m => m.ErrorPage)} />
           <Route path="/" exact component={DefaultPage} />
-
+          <LazyRoute path="/cluster-settings/webide" loader={() => import('./cluster-settings/webide' /* webpackChunkName: "cluster-settings" */).then(m => m.ClusterWebIdePage)} />
           <LazyRoute loader={() => import('./error' /* webpackChunkName: "error" */).then(m => m.ErrorPage404)} />
         </Switch>
       </div>

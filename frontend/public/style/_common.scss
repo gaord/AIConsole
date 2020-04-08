@@ -563,3 +563,7 @@ $co-external-link-padding-right: 15px;
 .no-margin {
   margin: 0 !important;
 }
+.iframe-wrap iframe{
+  display: block;background: #fff;border: none;height: 
+  calc(100vh - 60px) ;width: 100%;
+}
