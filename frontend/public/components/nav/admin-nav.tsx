@@ -95,12 +95,12 @@ const AdminNav = () => (
     <NavSection title="工作负载">
       <ResourceNSLink resource="pods" name="Pods" />
       <ResourceNSLink resource="virtualmachines" name="虚拟机" />
-      <ResourceNSLink resource="virtualmachineinstances" name="虚拟机示例" />
+      <ResourceNSLink resource="virtualmachineinstances" name="虚拟机事件" />
       <ResourceNSLink resource="deployments" name="部署" />
       <ResourceNSLink resource="部署配置" name='部署配置' required={FLAGS.OPENSHIFT} />
       <ResourceNSLink resource="statefulsets" name="状态集" />
       <ResourceNSLink resource="secrets" name="秘密" />
-      <ResourceNSLink resource="configmaps" name="配置图" />
+      <ResourceNSLink resource="configmaps" name="配置映射" />
       <Separator />
       <ResourceNSLink resource="cronjobs" name="定时任务" />
       <ResourceNSLink resource="jobs" name="工作" />
