@@ -92,46 +92,50 @@ const AdminNav = () => (
       />
     </NavSection> */}
 
-    <NavSection title="Workloads">
+    <NavSection title="工作负载">
       <ResourceNSLink resource="pods" name="Pods" />
-      <ResourceNSLink resource="deployments" name="Deployments" />
-      <ResourceNSLink resource="deploymentconfigs" name={DeploymentConfigModel.labelPlural} required={FLAGS.OPENSHIFT} />
-      <ResourceNSLink resource="statefulsets" name="Stateful Sets" />
-      <ResourceNSLink resource="secrets" name="Secrets" />
-      <ResourceNSLink resource="configmaps" name="Config Maps" />
+      <ResourceNSLink resource="virtualmachines" name="虚拟机" />
+      <ResourceNSLink resource="virtualmachineinstances" name="虚拟机示例" />
+      <ResourceNSLink resource="deployments" name="部署" />
+      <ResourceNSLink resource="部署配置" name='部署配置' required={FLAGS.OPENSHIFT} />
+      <ResourceNSLink resource="statefulsets" name="状态集" />
+      <ResourceNSLink resource="secrets" name="秘密" />
+      <ResourceNSLink resource="configmaps" name="配置图" />
       <Separator />
-      <ResourceNSLink resource="cronjobs" name="Cron Jobs" />
-      <ResourceNSLink resource="jobs" name="Jobs" />
-      <ResourceNSLink resource="daemonsets" name="Daemon Sets" />
-      <ResourceNSLink resource="replicasets" name="Replica Sets" />
-      <ResourceNSLink resource="replicationcontrollers" name="Replication Controllers" />
-      <ResourceNSLink resource="horizontalpodautoscalers" name="Horizontal Pod Autoscalers" />
+      <ResourceNSLink resource="cronjobs" name="定时任务" />
+      <ResourceNSLink resource="jobs" name="工作" />
+      <ResourceNSLink resource="daemonsets" name="守护程序集" />
+      <ResourceNSLink resource="replicasets" name="副本集" />
+      <ResourceNSLink resource="replicationcontrollers" name="复制控制器" />
+      <ResourceNSLink resource="horizontalpodautoscalers" name="水平自动扩展" />
+      <ResourceNSLink resource="databasesources" name="数据库源" />
+      <ResourceNSLink resource="datajobs" name="数据作业" />
     </NavSection>
 
     { /* Temporary addition of Knative Serverless section until extensibility allows for section ordering
          and admin-nav gets contributed through extensions. */ }
     <NavSection title="Serverless" />
 
-    <NavSection title="Networking">
+    <NavSection title="联网">
       <ResourceNSLink resource="services" name="Services" />
       <ResourceNSLink resource="routes" name="Routes" required={FLAGS.OPENSHIFT} />
       <ResourceNSLink resource="ingresses" name="Ingresses" />
       <ResourceNSLink resource="networkpolicies" name="Network Policies" />
     </NavSection>
 
-    <NavSection title="Storage">
+    <NavSection title="存储">
       <ResourceClusterLink resource="persistentvolumes" name="Persistent Volumes" required={FLAGS.CAN_LIST_PV} />
       <ResourceNSLink resource="persistentvolumeclaims" name="Persistent Volume Claims" />
       <ResourceClusterLink resource="storageclasses" name="Storage Classes" />
     </NavSection>
 
-    <NavSection title="Builds" required={FLAGS.OPENSHIFT}>
+    <NavSection title="建物" required={FLAGS.OPENSHIFT}>
       <ResourceNSLink resource="buildconfigs" name={BuildConfigModel.labelPlural} />
       <ResourceNSLink resource="builds" name={BuildModel.labelPlural} />
       <ResourceNSLink resource="imagestreams" name={ImageStreamModel.labelPlural} startsWith={imagestreamsStartsWith} />
     </NavSection>
 
-    <NavSection title="Service Catalog" required={FLAGS.SERVICE_CATALOG}>
+    <NavSection title="服务目录" required={FLAGS.SERVICE_CATALOG}>
       <HrefLink
         href="/provisionedservices"
         name="Provisioned Services"
@@ -164,7 +168,7 @@ const AdminNav = () => (
       <ResourceClusterLink resource={referenceForModel(MachineConfigPoolModel)} name="Machine Config Pools" required={FLAGS.MACHINE_CONFIG} />
     </NavSection>
 
-    <NavSection title="Administration">
+    <NavSection title="管理">
       <HrefLink href="/settings/cluster" activePath="/settings/cluster/" name="Cluster Settings" required={FLAGS.CLUSTER_VERSION} startsWith={clusterSettingsStartsWith} />
       <ResourceClusterLink resource="namespaces" name="Namespaces" required={FLAGS.CAN_LIST_NS} />
       <ResourceNSLink resource="serviceaccounts" name="Service Accounts" />
