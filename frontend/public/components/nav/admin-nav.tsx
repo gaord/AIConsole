@@ -97,7 +97,7 @@ const AdminNav = () => (
       <ResourceNSLink resource="virtualmachines" name="虚拟机" />
       <ResourceNSLink resource="virtualmachineinstances" name="虚拟机事件" />
       <ResourceNSLink resource="deployments" name="部署" />
-      <ResourceNSLink resource="部署配置" name='部署配置' required={FLAGS.OPENSHIFT} />
+      <ResourceNSLink resource="deploymentconfigs" name='部署配置' required={FLAGS.OPENSHIFT} />
       <ResourceNSLink resource="statefulsets" name="状态集" />
       <ResourceNSLink resource="secrets" name="秘密" />
       <ResourceNSLink resource="configmaps" name="配置映射" />
@@ -129,7 +129,7 @@ const AdminNav = () => (
       <ResourceClusterLink resource="storageclasses" name="Storage Classes" />
     </NavSection>
 
-    <NavSection title="建物" required={FLAGS.OPENSHIFT}>
+    <NavSection title="build" required={FLAGS.OPENSHIFT}>
       <ResourceNSLink resource="buildconfigs" name={BuildConfigModel.labelPlural} />
       <ResourceNSLink resource="builds" name={BuildModel.labelPlural} />
       <ResourceNSLink resource="imagestreams" name={ImageStreamModel.labelPlural} startsWith={imagestreamsStartsWith} />

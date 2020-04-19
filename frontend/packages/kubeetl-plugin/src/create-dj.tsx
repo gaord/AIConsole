@@ -32,9 +32,16 @@ class CreateDJPage extends React.Component<CreateDJPageProps, CreateDJPageState>
   onChange = (obj:{djObj: K8sResourceKind, cmObj: K8sResourceKind}) => {
     this.setState(obj);
   };
-
+  componentWillMount() {
+    document.querySelector(".co-namespace-bar").style.display = 'none';
+    console.log('123')
+  }
   save = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
+    console.log(this.state.djObj)
+    console.log(this.state.cmObj)
+
+    // return false;
     this.setState({ inProgress: true });
     k8sCreate(DataJobModel, this.state.djObj).then(
       resource => {
@@ -45,7 +52,8 @@ class CreateDJPage extends React.Component<CreateDJPageProps, CreateDJPageState>
 
     k8sCreate(ConfigMapModel, this.state.cmObj).then(
       resource => {
-        history.push(resourceObjPath(resource, referenceFor(resource)));
+        // 配置不跳转
+        // history.push(resourceObjPath(resource, referenceFor(resource)));
       },
       err => this.setState({ error: err.message, inProgress: false })
     );
@@ -206,9 +214,10 @@ export class CreateDJForm extends React.Component<CreateDJFormProps, CreateDJFor
         name: configmapName,
         namespace,
       },
-      spec: {
-        cmname: configmapName,
-      }
+      data: {
+        'config.json': `|
+${JSON.stringify(this.state.job,null,4)}`     
+      },
     };
     const cmObj: K8sResourceKind = {
       apiVersion: 'v1',
@@ -236,6 +245,7 @@ ${JSON.stringify(this.state.job,null,4)}`
           <input
             className="pf-c-form-control"
             type="text"
+            autoComplete="off"
             onChange={this.handleChange}
             placeholder="my-configmap-name"
             aria-describedby="configmap-name-help"
@@ -257,11 +267,12 @@ ${JSON.stringify(this.state.job,null,4)}`
             className="pf-c-form-control"
             type="text"
             onChange={this.handleChange}
-            placeholder="2"
+            placeholder="请填写通道数量"
             aria-describedby="channels-help"
             id="channels"
+            autoComplete="off"
             name="job.setting.speed.channel"
-            pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
+            pattern="^\+?[1-9][0-9]*$"
             required
           />
           <p className="help-block" id="channels-help">
@@ -298,6 +309,7 @@ ${JSON.stringify(this.state.job,null,4)}`
             placeholder="my src tables"
             aria-describedby="src-tables-help"
             id="src-tables"
+            autoComplete="off"
             name="job.content.reader.parameter.connection.table"
             pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
             required
@@ -318,6 +330,7 @@ ${JSON.stringify(this.state.job,null,4)}`
             placeholder="my src columns"
             aria-describedby="src-columns-help"
             id="src-columns"
+            autoComplete="off"
             name="job.content.reader.parameter.column"
             pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
             required
@@ -338,8 +351,9 @@ ${JSON.stringify(this.state.job,null,4)}`
             placeholder="my query sql"
             aria-describedby="querysql-help"
             id="querysql"
+            autoComplete="off"
             name="job.content.reader.parameter.querySql"
-            pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
+            // pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
             required
           />
           <p className="help-block" id="querysql-help">
@@ -377,8 +391,9 @@ ${JSON.stringify(this.state.job,null,4)}`
             placeholder="my presql"
             aria-describedby="presql-help"
             id="presql"
+            autoComplete="off"
             name="job.content.writer.parameter.preSql"
-            pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
+            // pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
             required
           />
           <p className="help-block" id="presql-help">
@@ -397,8 +412,9 @@ ${JSON.stringify(this.state.job,null,4)}`
             placeholder="my postsql"
             aria-describedby="postsql-help"
             id="postsql"
+            autoComplete="off"
             name="job.content.writer.parameter.postSql"
-            pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
+            // pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
             required
           />
           <p className="help-block" id="postsql-help">
@@ -417,6 +433,7 @@ ${JSON.stringify(this.state.job,null,4)}`
             placeholder="my dst tables"
             aria-describedby="dst-tables-help"
             id="dst-tables"
+            autoComplete="off"
             name="job.content.writer.parameter.connection.table"
             pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
             required
@@ -433,6 +450,7 @@ ${JSON.stringify(this.state.job,null,4)}`
           <input
             className="pf-c-form-control"
             type="text"
+            autoComplete="off"
             onChange={this.handleChange}
             placeholder="my dst columns"
             aria-describedby="dst-columns-help"
