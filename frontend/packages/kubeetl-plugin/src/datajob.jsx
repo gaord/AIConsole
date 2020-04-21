@@ -82,6 +82,7 @@ export const DataJobsPage = props => {
   const createProps = {
     to: `/k8s/ns/${props.namespace || 'default'}/datajobs/~new/form`,
   };
+  document.querySelector(".co-namespace-bar").style.display = 'block';
   return <ListPage {...props} ListComponent={DataJobsList} kind={kind} canCreate={true} createProps={createProps} />;
 };
 export const DataJobsDetailsPage = props => <DetailsPage

@@ -38,7 +38,6 @@ class CreateDJPage extends React.Component<CreateDJPageProps, CreateDJPageState>
     console.log(this.state.djObj)
     console.log(this.state.cmObj)
 
-    return false;
     this.setState({ inProgress: true });
     k8sCreate(DataJobModel, this.state.djObj).then(
       resource => {

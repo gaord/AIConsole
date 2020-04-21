@@ -32,9 +32,10 @@ class CreateDJPage extends React.Component<CreateDJPageProps, CreateDJPageState>
   onChange = (obj:{djObj: K8sResourceKind, cmObj: K8sResourceKind}) => {
     this.setState(obj);
   };
-  componentWillMount() {
-    document.querySelector(".co-namespace-bar").style.display = 'none';
-    console.log('123')
+  componentDidMount() {
+    if(location.href.indexOf("form")>-1) {
+      document.querySelector(".co-namespace-bar").style.display = 'none';
+    }
   }
   save = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
@@ -99,11 +100,11 @@ class CreateDJPage extends React.Component<CreateDJPageProps, CreateDJPageState>
     );
   }
 }
-
 export class CreateDJForm extends React.Component<CreateDJFormProps, CreateDJFormState> {
   state = {
     configmapName: null,
     job: defaulJob,
+    showTable: true
     // srcDbs: null,
     // dstDbs: null,
   };
@@ -142,6 +143,15 @@ export class CreateDJForm extends React.Component<CreateDJFormProps, CreateDJFor
     return this.props.onChange(this.updateDJ());
   }
   
+  changeRadio = (e) => {
+    
+    if(e.target.value==='table') {
+      this.setState({showTable: true},function(){})
+    } else {
+      this.setState({showTable: false},function(){})
+    }
+    // console.log(this.state.showTable)
+  }
   getJobFromDBS(dbsObj: K8sResourceKind, isSource: boolean): any
   {
     let spec = (dbsObj as K8sResourceKind).spec;
@@ -214,10 +224,9 @@ export class CreateDJForm extends React.Component<CreateDJFormProps, CreateDJFor
         name: configmapName,
         namespace,
       },
-      data: {
-        'config.json': `|
-${JSON.stringify(this.state.job,null,4)}`     
-      },
+      spec: {
+        cmname: configmapName,
+      }
     };
     const cmObj: K8sResourceKind = {
       apiVersion: 'v1',
@@ -237,132 +246,141 @@ ${JSON.stringify(this.state.job,null,4)}`
   render() {
     return (
       <React.Fragment>
-        <FormSection title="通用设置">
-        <label className="control-label co-required" htmlFor="configmap-name">
-          ConfigMap名称
-        </label>
-        <div className="form-group">
-          <input
-            className="pf-c-form-control"
-            type="text"
-            autoComplete="off"
-            onChange={this.handleChange}
-            placeholder="my-configmap-name"
-            aria-describedby="configmap-name-help"
-            id="configmap-name"
-            name="configmapName"
-            pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
-            required
-          />
-          <p className="help-block" id="configmap-name-help">
-          作业配置将创建为指定名称的ConfigMap.
-          </p>
-        </div>
+        <div className="com-form-wrap">
+          <FormSection title="通用设置">
+          <label className="control-label co-required" htmlFor="configmap-name">
+            ConfigMap名称
+          </label>
+          <div className="form-group">
+            <input
+              className="pf-c-form-control"
+              type="text"
+              autoComplete="off"
+              onChange={this.handleChange}
+              placeholder="my-configmap-name"
+              aria-describedby="configmap-name-help"
+              id="configmap-name"
+              name="configmapName"
+              pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
+              required
+            />
+            <p className="help-block" id="configmap-name-help">
+            作业配置将创建为指定名称的ConfigMap.
+            </p>
+          </div>
 
-        <label className="control-label co-required" htmlFor="channels">
-          通道数量
-        </label>
-        <div className="form-group">
-          <input
-            className="pf-c-form-control"
-            type="text"
-            onChange={this.handleChange}
-            placeholder="请填写通道数量"
-            aria-describedby="channels-help"
-            id="channels"
-            autoComplete="off"
-            name="job.setting.speed.channel"
-            pattern="^\+?[1-9][0-9]*$"
-            required
-          />
-          <p className="help-block" id="channels-help">
-          通道数量是关于数据传输速度的设置.
-          </p>
-        </div>
-        </FormSection>
-        <FormSection title="读取设置">
-        <label className="control-label co-required" htmlFor="src-dbs-dropdown">
-          读取数据源
-        </label>
-        <div className="form-group">
-          <ListDropdown
-            resources={[{kind: "DatabaseSource", namespace: namespace}]}
-            desc={"数据来源"}
-            placeholder={`Select DatabaseSource`}
-            onChange = {this.handleSrcDbs}
-            id="src-dbs-dropdown"
-            name="srcDbs"
-          />
-          <p className="help-block" id="src-dbs-dropdown-help">
-          从列表中选择数据读取来源.
-          </p>
-        </div>
+          <label className="control-label co-required" htmlFor="channels">
+            通道数量
+          </label>
+          <div className="form-group">
+            <input
+              className="pf-c-form-control"
+              type="text"
+              onChange={this.handleChange}
+              placeholder="请填写通道数量"
+              aria-describedby="channels-help"
+              id="channels"
+              autoComplete="off"
+              name="job.setting.speed.channel"
+              pattern="^\+?[1-9][0-9]*$"
+              required
+            />
+            <p className="help-block" id="channels-help">
+            通道数量是关于数据传输速度的设置.
+            </p>
+          </div>
+          </FormSection>
+          <FormSection title="读取设置">
+          <label className="control-label co-required" htmlFor="src-dbs-dropdown">
+            读取数据源
+          </label>
+          <div className="form-group">
+            <ListDropdown
+              resources={[{kind: "DatabaseSource", namespace: namespace}]}
+              desc={"数据来源"}
+              placeholder={`Select DatabaseSource`}
+              onChange = {this.handleSrcDbs}
+              id="src-dbs-dropdown"
+              name="srcDbs"
+            />
+            <p className="help-block" id="src-dbs-dropdown-help">
+            从列表中选择数据读取来源.
+            </p>
+          </div>
+          <div className="change-radio-wrap clearfix">
+            <div className="radio"><label className=""><input onClick={this.changeRadio} type="radio" name="table" value="table" checked={this.state.showTable}/>列表选择</label></div>
+            <div className="radio"><label className=""><input onClick={this.changeRadio} type="radio" name="table" value="sql" checked={!this.state.showTable}/>sql查询选择</label></div>
+          </div>
+          {
+            this.state.showTable
+            ?
+            <div>
+              <label className="control-label co-required" htmlFor="src-tables" style={{marginBottom:'20px'}}>表名</label>
+              <div className="form-group">
+                <input
+                  className="pf-c-form-control"
+                  type="text"
+                  onChange={this.handleChange}
+                  placeholder="my src tables"
+                  aria-describedby="src-tables-help"
+                  id="src-tables"
+                  autoComplete="off"
+                  name="job.content.reader.parameter.connection.table"
+                  pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
+                  required
+                />
+                <p className="help-block" id="src-tables-help">
+                读取的一个或者多个表名称列表.
+                </p>
+              </div>
+              <label className="control-label co-required" htmlFor="src-columns" style={{marginBottom:'20px'}}>
+                列名
+              </label>
+              <div className="form-group">
+                <input
+                  className="pf-c-form-control"
+                  type="text"
+                  onChange={this.handleChange}
+                  placeholder="my src columns"
+                  aria-describedby="src-columns-help"
+                  id="src-columns"
+                  autoComplete="off"
+                  name="job.content.reader.parameter.column"
+                  pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
+                  required
+                />
+                <p className="help-block" id="src-columns-help" style={{marginBottom:'30px'}}>
+                读取的一个或者多个表中列名称列表.
+                </p>
+              </div>
+            </div>
+            :
+            <div>
+              <label style={{marginBottom:'20px'}} className="control-label co-required" htmlFor="querysql">
+                sql查询
+              </label>
+              <div className="form-group">
+                <input
+                  className="pf-c-form-control"
+                  type="text"
+                  onChange={this.handleChange}
+                  placeholder="my query sql"
+                  aria-describedby="querysql-help"
+                  id="querysql"
+                  autoComplete="off"
+                  name="job.content.reader.parameter.querySql"
+                  // pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
+                  required
+                />
+                <p className="help-block" id="querysql-help" style={{marginBottom:'30px'}}>
+                使用sql语句定义读取规则.
+                </p>
+              </div>
+            </div>
+          }
+          </FormSection>
 
-        <label className="control-label co-required" htmlFor="src-tables">
-          表名
-        </label>
-        <div className="form-group">
-          <input
-            className="pf-c-form-control"
-            type="text"
-            onChange={this.handleChange}
-            placeholder="my src tables"
-            aria-describedby="src-tables-help"
-            id="src-tables"
-            autoComplete="off"
-            name="job.content.reader.parameter.connection.table"
-            pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
-            required
-          />
-          <p className="help-block" id="src-tables-help">
-          读取的一个或者多个表名称列表.
-          </p>
-        </div>
-
-        <label className="control-label co-required" htmlFor="src-columns">
-          列名
-        </label>
-        <div className="form-group">
-          <input
-            className="pf-c-form-control"
-            type="text"
-            onChange={this.handleChange}
-            placeholder="my src columns"
-            aria-describedby="src-columns-help"
-            id="src-columns"
-            autoComplete="off"
-            name="job.content.reader.parameter.column"
-            pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
-            required
-          />
-          <p className="help-block" id="src-columns-help">
-          读取的一个或者多个表中列名称列表.
-          </p>
-        </div>
-
-        <label className="control-label co-required" htmlFor="querysql">
-          sql查询
-        </label>
-        <div className="form-group">
-          <input
-            className="pf-c-form-control"
-            type="text"
-            onChange={this.handleChange}
-            placeholder="my query sql"
-            aria-describedby="querysql-help"
-            id="querysql"
-            autoComplete="off"
-            name="job.content.reader.parameter.querySql"
-            // pattern="[a-z0-9](?:[-a-z0-9]*[a-z0-9])?"
-            required
-          />
-          <p className="help-block" id="querysql-help">
-          使用sql语句定义读取规则.
-          </p>
-        </div>
-        </FormSection>
-
-        <FormSection title="写入设置">
+          <FormSection title="写入设置" >
         <label className="control-label co-required" htmlFor="dst-dbs-dropdown">
         写入数据源
         </label>
@@ -464,6 +482,7 @@ ${JSON.stringify(this.state.job,null,4)}`
           </p>
         </div>
         </FormSection>
+        </div>
       </React.Fragment>
     );
   }
@@ -576,6 +595,7 @@ export type CreateDJFormProps = {
 export type CreateDJFormState = {
   configmapName: string;
   job: Job;
+  showTable: boolean;
   // srcDbs: K8sResourceKind;
   // dstDbs: K8sResourceKind;
 };
@@ -590,4 +610,5 @@ export type CreateDJPageState = {
   title: string;
   djObj: K8sResourceKind;
   cmObj: K8sResourceKind;
+  showTable: true;
 };

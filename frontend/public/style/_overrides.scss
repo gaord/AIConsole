@@ -505,3 +505,23 @@ kbd {
   // see https://github.com/xtermjs/xterm.js/issues/1974
   border-right: 1px solid transparent;
 }
+
+// .co-m-pane__form .form-group {
+//   margin-top: -10px;
+// }
+.com-form-wrap .co-m-pane__form .form-group {
+  margin-top: -15px;
+}
+.change-radio-wrap .radio{
+  float: left;
+  width: 130px;
+  margin: 0px;
+  margin-right: 20px;
+}
+.clearfix:after {
+  content: "." ;
+  display: block ;
+  height: 0 ;
+  clear: both ;
+  visibility: hidden ;
+}
