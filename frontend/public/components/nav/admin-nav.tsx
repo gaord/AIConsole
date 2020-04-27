@@ -110,6 +110,7 @@ const AdminNav = () => (
       <ResourceNSLink resource="horizontalpodautoscalers" name="水平自动扩展" />
       <ResourceNSLink resource="databasesources" name="数据库源" />
       <ResourceNSLink resource="datajobs" name="数据作业" />
+      <ResourceNSLink resource="workflows" name="数据流" />
     </NavSection>
 
     { /* Temporary addition of Knative Serverless section until extensibility allows for section ordering

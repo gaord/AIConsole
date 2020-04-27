@@ -54,6 +54,18 @@ const plugin: Plugin<ConsumedExtensions> = [
     },
   },
   {
+    type: 'NavItem/ResourceNS',
+    properties: {
+      section: 'Workloads',
+      perspective: 'admin',
+      componentProps: {
+        name: 'Work Flows',
+        resource: 'workflows',
+        testID: 'advanced-workflow-header',
+      },
+    },
+  },
+  {
     type: 'Page/Resource/List',
     properties: {
       model: models.DatabaseSourceModel,
@@ -125,6 +137,36 @@ const plugin: Plugin<ConsumedExtensions> = [
       path: `/k8s/ns/:ns/datajobs/~new/form`,
       loader: () =>
          import('./create-dj' /* webpackChunkName: "create-dj" */)
+          .then(m => m.CreateDJ),
+    },
+  },
+  {
+    type: 'Page/Resource/List',
+    properties: {
+      model: models.WorkFlowModel,
+      loader: () =>
+        import('./dataflow').then(
+          (m) => m.DataJobsPage,
+        ),
+    },
+  }, 
+  {
+    type: 'Page/Resource/Details',
+    properties: {
+      model: models.WorkFlowModel,
+      loader: () =>
+        import('./dataflow').then(
+          (m) => m.DataJobsPage,
+        ),
+    },
+  },
+  {
+    type: 'Page/Route',
+    properties: {
+      exact: true,
+      path: `/k8s/ns/:ns/workflows/~new/workflow`,
+      loader: () =>
+         import('./create-wf' /* webpackChunkName: "create-dj" */)
           .then(m => m.CreateDJ),
     },
   },

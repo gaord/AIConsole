@@ -23,4 +23,16 @@ export const DatabaseSourceModel: K8sKind = {
     id: 'datajob',
     labelPlural: 'Data Jobs',
   };
+
+  export const WorkFlowModel: K8sKind = {
+    apiVersion: 'v1',
+    apiGroup: 'beta.sup-info.me',
+    label: 'WorkFlow',
+    plural: 'workflows',
+    abbr: 'WF',
+    namespaced: true,
+    kind: 'WorkFlow',
+    id: 'workflow',
+    labelPlural: 'Work Flows',
+  };
   

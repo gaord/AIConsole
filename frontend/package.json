@@ -75,6 +75,7 @@
     "@patternfly/react-tokens": "2.6.13",
     "@patternfly/react-topology": "2.6.20",
     "@patternfly/react-virtualized-extension": "1.1.82",
+    "@xstate/fsm": "^1.4.0",
     "abort-controller": "3.0.0",
     "classnames": "2.x",
     "core-js": "2.x",
@@ -149,11 +150,13 @@
     "@types/react-transition-group": "2.x",
     "@types/react-virtualized": "9.x",
     "@types/webpack": "4.x",
+    "@xstate/react": "^0.8.1",
+    "babel-plugin-codegen": "^4.0.1",
     "bootstrap-sass": "^3.3.7",
     "browser-env": "3.x",
     "cache-loader": "1.x",
     "chalk": "2.3.x",
-    "chromedriver": "76.x",
+    "chromedriver": "^76.0.1",
     "circular-dependency-plugin": "5.0.2",
     "css-loader": "^3.5.1",
     "enzyme": "^3.9.0",
@@ -189,7 +192,8 @@
     "webpack-bundle-analyzer": "^3.6.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.8.0",
-    "webpack-virtual-modules": "^0.1.10"
+    "webpack-virtual-modules": "^0.1.10",
+    "xstate": "^4.9.1"
   },
   "engines": {
     "node": ">=8.x"
