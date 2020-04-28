@@ -11,7 +11,7 @@ import {
   BuildModel,
   ChargebackReportModel,
   ClusterServiceVersionModel,
-  DeploymentConfigModel,
+  // DeploymentConfigModel,
   ImageStreamModel,
   MachineAutoscalerModel,
   MachineConfigModel,
@@ -78,7 +78,7 @@ const AdminNav = () => (
     <NavSection title="开发">
       <HrefLink href="/cluster-settings/webide" activePath="/cluster-settings/webide" name="webide" required={FLAGS.CAN_LIST_NS} />
     </NavSection>
-    {/* <NavSection title="Operators" required={FLAGS.OPERATOR_LIFECYCLE_MANAGER}>
+    <NavSection title="Operators" required={FLAGS.OPERATOR_LIFECYCLE_MANAGER}>
       <HrefLink
         required={[FLAGS.CAN_LIST_PACKAGE_MANIFEST, FLAGS.CAN_LIST_OPERATOR_GROUP]}
         href="/operatorhub"
@@ -90,7 +90,7 @@ const AdminNav = () => (
         resource={ClusterServiceVersionModel.plural}
         name="Installed Operators"
       />
-    </NavSection> */}
+    </NavSection>
 
     <NavSection title="工作负载">
       <ResourceNSLink resource="pods" name="Pods" />

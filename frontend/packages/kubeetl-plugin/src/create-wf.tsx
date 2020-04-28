@@ -2,20 +2,8 @@ import * as _ from 'lodash-es';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { ActionGroup, Button } from '@patternfly/react-core';
-import { k8sCreate, K8sResourceKind, referenceFor, k8sGet } from '@console/internal/module/k8s';
-import {
-    ButtonBar,
-    history,
-    resourceObjPath,
-    ListDropdown
-} from '@console/internal/components/utils';
-import { DataJobModel, DatabaseSourceModel, WorkFlowModel } from './models/index';
-import { ConfigMapModel } from '@console/internal/models/index';
-import { namespace } from 'd3';
+import { K8sResourceKind } from '@console/internal/module/k8s';
 import FormSection from '@console/dev-console/src/components/import/section/FormSection';
-import update from 'immutability-helper';
-import { useMachine } from '@xstate/react';
 import { Machine,interpret } from 'xstate';
 export const CreateDJ = (props) => {
     return <CreateDJPage namespace={props.match.params.ns} />;
@@ -77,18 +65,19 @@ class CreateDJPage extends React.Component<CreateDJPageProps, CreateDJPageState>
         djObj: null,
         cmObj: null,
         value: 'green',
-        currentState: 'green'
+        currentState: 'green',
+        showTable: false
     };
     componentDidMount() {
-        if (location.href.indexOf("form") > -1) {
-            document.querySelector(".co-namespace-bar").style.display = 'none';
-        }
-        const promiseService = interpret(promiseMachine).onTransition(state =>
-        console.log(state.value)
-        );
-        promiseService.start();
-        promiseService.send('RESOLVE');""
-        console.log("执行")
+        // if (location.href.indexOf("form") > -1) {
+        //     document.querySelector(".co-namespace-bar").style.display = 'none';
+        // }
+        // const promiseService = interpret(promiseMachine).onTransition(state =>
+        // console.log(state.value)
+        // );
+        // promiseService.start();
+        // promiseService.send('RESOLVE');""
+        // console.log("执行")
     }
     
     render() {

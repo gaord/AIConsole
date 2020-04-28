@@ -193,7 +193,7 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.8.0",
     "webpack-virtual-modules": "^0.1.10",
-    "xstate": "^4.9.1"
+    "xstate": "4.6.1"
   },
   "engines": {
     "node": ">=8.x"
